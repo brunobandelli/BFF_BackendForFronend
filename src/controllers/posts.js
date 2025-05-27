@@ -17,10 +17,7 @@ class PostsController {
      */
 
     async createPosts(body) {
-        console.log('CONTROLLERS --- createPosts --- body: ', body)
         const data = await createPostsInteractor.execute(body)
-        console.log('CONTROLLERS --- createPosts --- data: ', data)
-
         return data
     }
 
@@ -30,11 +27,7 @@ class PostsController {
      */
 
     async getPost(id) {
-        console.log('CONTROLLERS --- getPost --- id: ', id);
-
         const data = await fetchPostByIdInteractor.execute(id);
-
-        console.log('CONTROLLERS --- getPost --- data: ', data);
 
         return data;
     }

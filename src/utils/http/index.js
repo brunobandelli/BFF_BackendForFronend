@@ -19,13 +19,11 @@ class Http {
     async request(params, { timeout } = {}) {
         const cancelTimeout = new AbortController();
         const cancelRequest = new AbortController();
-        console.log('HTTP REQUEST --- INDEX -  params: ', params)
         try {
             const response = await Promise.race([
                 this.#makeRequest(params, { cancelTimeout, cancelRequest }),
                 this.#timeout(timeout, { cancelTimeout, cancelRequest }),
             ]);
-            console.log('HTTP REQUEST --- INDEX --- TRY --- response: ', response)
 
             return response
         } catch (error) {
@@ -39,7 +37,6 @@ class Http {
 
     async #makeRequest(params, { cancelTimeout, cancelRequest }) {
         try {
-            console.log('HTTP REQUEST --- INDEX --- TRY --- makeRequest -- params: ', params)
 
             const { body, ...rest } = params;
             const response = await this.#client.request({
@@ -51,15 +48,12 @@ class Http {
                     ...params.headers,
                 },
             });
-            console.log('HTTP REQUEST --- INDEX --- TRY --- makeRequest -- response: ', response)
 
             if (response.statusCode < 200 || response.statusCode >= 300) {
                 throw new Error(`Request failed with status ${response.statusCode}`);
             }
 
             const data = await response.body.json();
-
-            console.log('HTTP REQUEST --- INDEX --- TRY --- makeRequest -- data: ', data)
 
             return data;
         } finally {

@@ -3,12 +3,10 @@ const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';
 
 function encrypt(text) {
-  console.log('CRYPTO -  ENCRYPT ---- text: ', text)
   const iv = crypto.randomBytes(16);
   const key = crypto.randomBytes(32);
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   const encrypted = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]);
-  console.log('CRYPTO -  ENCRYPT ---- encrypted: ', encrypted)
 
   return {
     encryptedData: encrypted.toString('hex'),

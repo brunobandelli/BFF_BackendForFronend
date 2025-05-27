@@ -15,7 +15,6 @@ class FetchPostByIdInteractor {
    */
   async execute(id) {
     try {
-      console.log('INTERACTOR --- fetchPostById --- id: ', id);
 
       // 1. Buscar post e comentários
       const [post, dataComments] = await Promise.all([
@@ -23,14 +22,10 @@ class FetchPostByIdInteractor {
         this.commentsService.getComments(id)
       ]);
 
-      console.log('INTERACTOR --- fetchPostById --- raw comments: ', dataComments);
-
       // 2. Garantir que sempre haja comentários (mock caso necessário)
       const comments = (dataComments && dataComments.length > 0)
         ? dataComments
         : await this.commentsService.getComments(1); // Mock para testes, para usar todos os serviços como demonstração.
-
-      console.log('INTERACTOR --- fetchPostById --- final comments: ', comments);
 
       // 3. Construir set com os IDs únicos de usuários
       const userIds = new Set([post.authorId]);
@@ -56,7 +51,6 @@ class FetchPostByIdInteractor {
       };
 
     } catch (error) {
-      console.error('INTERACTOR --- fetchPostById --- error: ', error);
       throw new Error('Fail to fetch post');
     }
   }

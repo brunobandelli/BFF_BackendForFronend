@@ -13,7 +13,6 @@ class PostsService {
 
      async createPosts(postData) {
 
-            console.log('SERVICE ----- createPosts --- postData: ', postData)
             const response = await this.#client.request({
                 method: 'POST',
                 path: '/posts',
@@ -21,14 +20,11 @@ class PostsService {
             }, {
                 timeout: 10000,
             })
-            console.log('SERVICE ----- createPosts --- response: ', response)
 
             return response;
         }
     
      async getPosts() {
-
-            console.log('-----GETPOSTS: ', '1111111111')
 
             const response = await this.#client.request({
                 method: 'GET',
@@ -36,12 +32,6 @@ class PostsService {
             }, {
                 timeout: 15000
             })
-
-            console.log('-----GETPOSTS: ', '222222222222')
-
-
-            console.log('-----GETPOSTS ---- response: ', response)
-
 
             const posts = []
 
@@ -52,9 +42,6 @@ class PostsService {
                     title: post.title,
                 })
             }
-
-            console.log('-----GETPOSTS ---- posts: ', posts)
-
 
             return posts;
         }

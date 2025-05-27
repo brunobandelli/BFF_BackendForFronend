@@ -1,10 +1,10 @@
-const Http = require('../utils/http');
+const Http = require("../../utils/http");
 
 class PostsService {
     #client;
 
     constructor() {
-        this.#client = new Http('http://127.0.0.1:3001');
+        this.#client = new Http('http://posts:3001');
     }
 
     /**
@@ -34,7 +34,7 @@ class PostsService {
                 method: 'GET',
                 path: '/posts',
             }, {
-                timeout: 5000
+                timeout: 15000
             })
 
             console.log('-----GETPOSTS: ', '222222222222')

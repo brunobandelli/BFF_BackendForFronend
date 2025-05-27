@@ -1,6 +1,6 @@
-const PostsService = require("../services/posts");
-const CommentsService = require("../services/comments");
-const UsersService = require("../services/users");
+const PostsService = require("../services/posts/posts");
+const CommentsService = require("../services/comments/comments");
+const UsersService = require("../services/users/users");
 
 class FetchPostByIdInteractor {
   constructor() {

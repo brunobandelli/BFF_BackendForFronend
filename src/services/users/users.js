@@ -1,9 +1,10 @@
-const Http = require("../utils/http")
+const Http = require("../../utils/http");
+
 class UsersService {
     #client;
 
     constructor() {
-        this.#client = new Http('http://localhost:3003');
+        this.#client = new Http('http://users:3003');
     }
     
     /**

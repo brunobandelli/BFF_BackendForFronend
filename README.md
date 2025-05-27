@@ -4,5 +4,4 @@ node index.js na pasta src.
 Para executar cada serviço, eh necessario abrir um teriminal para cada.
 make posts/comments/users.
 
-Para fazer uma requisição, abrir um novo terminal.
-curl http://localhost:3000/post/1 | jq
+para testar as requisições utilize o insomnia ou o postman, e siga conforme a documentação swagger.

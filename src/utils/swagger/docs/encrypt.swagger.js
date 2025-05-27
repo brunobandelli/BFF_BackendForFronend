@@ -1,0 +1,71 @@
+/**
+ * @openapi
+ * /encrypt:
+ *   post:
+ *     summary: Criptografa um texto simples
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *             required:
+ *               - text
+ *     responses:
+ *       200:
+ *         description: Texto criptografado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 encryptedData:
+ *                   type: string
+ *                 key:
+ *                   type: string
+ *                 iv:
+ *                   type: string
+ *       400:
+ *         description: Requisição inválida
+ *       500:
+ *         description: Erro na criptografia
+ *
+ * /decrypt:
+ *   post:
+ *     summary: Descriptografa um texto criptografado
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               encryptedData:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               iv:
+ *                 type: string
+ *             required:
+ *               - encryptedData
+ *               - key
+ *               - iv
+ *     responses:
+ *       200:
+ *         description: Texto descriptografado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 text:
+ *                   type: string
+ *       400:
+ *         description: Requisição inválida
+ *       500:
+ *         description: Erro na descriptografia
+ */
+module.exports = {};

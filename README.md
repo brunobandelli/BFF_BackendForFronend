@@ -2,8 +2,9 @@
 Este projeto é um Backend For Frontend (BFF) que utiliza múltiplos serviços para posts, comentários e usuários, cada um rodando em um container Docker separado e com requisições criptografadas. 
 
 # **Requisitos**
-Docker
-Docker Compose
+* Docker
+
+* Docker Compose
 
 ## Como rodar
 

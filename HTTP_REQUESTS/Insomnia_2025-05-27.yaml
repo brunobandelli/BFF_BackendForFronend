@@ -1,0 +1,138 @@
+type: collection.insomnia.rest/5.0
+name: My Collection
+meta:
+  id: wrk_d83c1a2858db4958bd7b7757f79ec0a3
+  created: 1697907394739
+  modified: 1748303179471
+collection:
+  - url: http://localhost:3000/posts/encrypt
+    name: CreatePost
+    meta:
+      id: req_c4be04e45d474d49bf693f702d838bec
+      created: 1748303185066
+      modified: 1748372850464
+      isPrivate: false
+      sortKey: -1748303185066
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "authorId": "2",
+        	"title": "palavras",
+        	"text": "loremipsum a lot of that i thing is wrong thing only this"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/posts/decrypt
+    name: FetchPost
+    meta:
+      id: req_9c9df4dffa924ef4a3b22bcd590386bd
+      created: 1748303380484
+      modified: 1748389015711
+      isPrivate: false
+      sortKey: -1748303380484
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"encryptedData": "71251c6b010164e97c53fbf3ecf42c64a80eac7afefb5c9beaa98b21976b1adcd79037e48c01ee8b254acc29c788f21c1028a03e1f8c880e0f1790bf385ead15ab4b6d992a74ac8f6b92f0b1d5439e7d2913513dbcbf3133d1a6629e9c9d446de959618a8f81aa47cdf7b34efb",
+        	"key": "535cd284c2f2155c3f4c2dbd1758174762effd4f02f999e25bb3c9a310fd31be",
+        	"iv": "24b122e0bdc103c5fd164c3473f19c11"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/encrypt
+    name: EncryptRoute
+    meta:
+      id: req_993efe090f064fa58e4423d5853d594b
+      created: 1748369073454
+      modified: 1748369312541
+      isPrivate: false
+      sortKey: -1748369073454
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"text": "exemplo"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3000/decrypt
+    name: DecrypetRoute
+    meta:
+      id: req_4f575ff690794e7ba18edde410818a9c
+      created: 1748369302554
+      modified: 1748386561109
+      isPrivate: false
+      sortKey: -1748336226969
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"encryptedData": "0014417c9eb9ce",
+        	"key": "976274170e8a9ea5eabaa0cb7244d750df751a0cb8a72993142ac101b9d02056",
+        	"iv": "bd0cfd1df4368cd1331db74344c34ca6"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_daf62cb2a2d356eeea75ca5bde6caec0c0a74fae
+    created: 1748303179566
+    modified: 1748303179566
+environments:
+  name: Base Environment
+  meta:
+    id: env_daf62cb2a2d356eeea75ca5bde6caec0c0a74fae
+    created: 1697907394745
+    modified: 1748303179470
+    isPrivate: false

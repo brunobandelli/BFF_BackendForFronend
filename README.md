@@ -39,6 +39,8 @@ Serviço de usuários: http://localhost:3003
 ### *A documentação Swagger está disponível em:*
 http://localhost:3000/api-docs
 
+### *HTTP_REQUESTS:*
+Na pasta HTTP_REQUESTS estão os arquivos .har e .yaml para importar para dentro do API Clients (Insomnia e Postman).
 
 #### Comandos úteis
 

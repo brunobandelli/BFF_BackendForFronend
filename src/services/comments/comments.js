@@ -19,7 +19,7 @@ class CommentsService {
                 path: '/comments',
                 query: {postId}
             }, {
-                timeout: 5000,
+                timeout: 5000, //Esse timeout eh para simular situações reais de espera da requisição.
             })
 
             const comments = []

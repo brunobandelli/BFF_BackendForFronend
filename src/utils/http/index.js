@@ -2,6 +2,9 @@ const { setTimeout } = require('timers/promises')
 const { Client } = require('undici')
 const TimeoutException = require('./exceptions/TimeoutException')
 
+//Tratamento de requisições feitas para os serviços, para falharem com antecidencia evitando esperas longas.
+//Usando os conceitos do AbortController.
+//Site de referencia: https://nearform.com/insights/using-abortsignal-in-node-js/
 class Http {
     #client;
 

@@ -17,7 +17,7 @@ class UsersService {
                 path: '/users',
                 query: { id: ids }
             }, {
-                timeout: 3000,
+                timeout: 3000,  //Esse timeout eh para simular situações reais de espera da requisição.
             });
 
             const users = new Map()

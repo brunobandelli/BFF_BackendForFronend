@@ -30,7 +30,7 @@ class PostsService {
                 method: 'GET',
                 path: '/posts',
             }, {
-                timeout: 15000
+                timeout: 15000 //Esse timeout eh para simular situações reais de espera da requisição.
             })
 
             const posts = []

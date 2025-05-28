@@ -20,7 +20,9 @@ docker compose up --build
 ```
 
 ### **Para validar os testes unitario, rode:**
+```js
 npm run test
+```
 
 ### *Os serviços estarão disponíveis nas seguintes portas:*
 

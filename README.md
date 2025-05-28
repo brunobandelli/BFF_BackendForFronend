@@ -8,13 +8,16 @@ Docker Compose
 ## Como rodar
 
 *Clone o repositório:*
-git clone <url-do-repo>
+git clone "url"
 
 ### **Para construir as imagens, subir os containers e rodar o projeto, rode:**
-
+```js
 npm run docker 
+```
 Ou
+```js
 docker compose up --build
+```
 
 ### **Para validar os testes unitario, rode:**
 npm run test
@@ -34,9 +37,14 @@ Serviço de usuários: http://localhost:3003
 http://localhost:3000/api-docs
 
 
-Comandos úteis
+#### Comandos úteis
+
 Para acessar o shell do container do serviço de posts:
+```js
 docker compose exec posts sh
+```
 
 Para parar os containers:
+```js
 docker compose down
+```

@@ -2,13 +2,16 @@ const { setTimeout } = require('timers/promises')
 const { Client } = require('undici')
 const TimeoutException = require('./exceptions/TimeoutException')
 
+//Tratamento de requisições feitas para os serviços, para falharem com antecidencia evitando esperas longas.
+//Usando os conceitos do AbortController.
+//Site de referencia: https://nearform.com/insights/using-abortsignal-in-node-js/
 class Http {
     #client;
 
     /**
     * @param {string} url
     */
-    constructor(url){
+    constructor(url) {
         this.#client = new Client(url);
     }
 
@@ -16,10 +19,9 @@ class Http {
      * @param {import('undici').Dispatcher.ResponseData} params
      * @param {{timeout: number}} options
      */
-    async request (params, {timeout} = {}) {
+    async request(params, { timeout } = {}) {
         const cancelTimeout = new AbortController();
         const cancelRequest = new AbortController();
-
         try {
             const response = await Promise.race([
                 this.#makeRequest(params, { cancelTimeout, cancelRequest }),
@@ -28,7 +30,7 @@ class Http {
 
             return response
         } catch (error) {
-            if(error instanceof TimeoutException) {
+            if (error instanceof TimeoutException) {
                 console.log('Timeout exceeded')
             }
 
@@ -36,34 +38,42 @@ class Http {
         }
     }
 
-async #makeRequest(params, { cancelTimeout, cancelRequest }) {
-    try {
-        const response = await this.#client.request({
-            ...params,
-            signal: cancelRequest.signal,
-        });
+    async #makeRequest(params, { cancelTimeout, cancelRequest }) {
+        try {
 
-        if (response.statusCode < 200 || response.statusCode >= 300) {
-            throw new Error(`Request failed with status ${response.statusCode}`);
+            const { body, ...rest } = params;
+            const response = await this.#client.request({
+                ...rest,
+                signal: cancelRequest.signal,
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...params.headers,
+                },
+            });
+
+            if (response.statusCode < 200 || response.statusCode >= 300) {
+                throw new Error(`Request failed with status ${response.statusCode}`);
+            }
+
+            const data = await response.body.json();
+
+            return data;
+        } finally {
+            cancelTimeout.abort();
         }
-
-        const data = await response.body.json();
-        return data;
-    } finally {
-        cancelTimeout.abort();
     }
-}
 
-    async #timeout (delay, {cancelTimeout, cancelRequest} ) {
+    async #timeout(delay, { cancelTimeout, cancelRequest }) {
         try {
             await setTimeout(delay, undefined, { signal: cancelTimeout.signal });
             cancelRequest.abort()
-        } catch(error){
+        } catch (error) {
             return;
         }
 
         throw new TimeoutException();
-        
+
     }
 }
 

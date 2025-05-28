@@ -1,36 +1,47 @@
-const Http = require('../utils/http');
+const Http = require("../../utils/http");
 
 class PostsService {
     #client;
 
     constructor() {
-        this.#client = new Http('http://127.0.0.1:3001');
+        this.#client = new Http('http://posts:3001');
     }
-    
+
     /**
-     * @param {number} limit 
+     * @param {object} postData 
      */
 
-     async getPosts(limit = 5) {
+     async createPosts(postData) {
+
+            const response = await this.#client.request({
+                method: 'POST',
+                path: '/posts',
+                body: postData
+            }, {
+                timeout: 10000,
+            })
+
+            return response;
+        }
+    
+     async getPosts() {
+
             const response = await this.#client.request({
                 method: 'GET',
                 path: '/posts',
+            }, {
+                timeout: 15000 //Esse timeout eh para simular situações reais de espera da requisição.
             })
-
-            const data = await response.body.json();
 
             const posts = []
 
-            for (const post of data ){
-                if(posts.length >= limit ) continue;
-
+            for (const post of response ){
                 posts.push({
                     id: post.id,
                     authorId: post.authorId,
                     title: post.title,
                 })
             }
-
 
             return posts;
         }

@@ -1,9 +1,10 @@
-const Http = require("../utils/http")
+const Http = require("../../utils/http");
+
 class UsersService {
     #client;
 
     constructor() {
-        this.#client = new Http('http://localhost:3003');
+        this.#client = new Http('http://users:3003');
     }
     
     /**
@@ -16,7 +17,7 @@ class UsersService {
                 path: '/users',
                 query: { id: ids }
             }, {
-                timeout: 3000,
+                timeout: 3000,  //Esse timeout eh para simular situações reais de espera da requisição.
             });
 
             const users = new Map()

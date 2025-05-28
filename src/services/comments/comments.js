@@ -1,10 +1,10 @@
-const Http = require("../utils/http");
+const Http = require("../../utils/http");
 
 class CommentsService {
     #client;
 
     constructor() {
-        this.#client = new Http('http://localhost:3002');
+        this.#client = new Http('http://comments:3002');
     }
     
     /**
@@ -19,7 +19,7 @@ class CommentsService {
                 path: '/comments',
                 query: {postId}
             }, {
-                timeout: 5000,
+                timeout: 5000, //Esse timeout eh para simular situações reais de espera da requisição.
             })
 
             const comments = []

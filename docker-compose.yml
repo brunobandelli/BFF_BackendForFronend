@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  bff:
+    build: ./
+    ports:
+      - "3000:3000"
+    depends_on:
+      - posts
+      - comments
+      - users
+
+  posts:
+    build: src/services/posts
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src/services/posts/posts.json:/app/posts.json
+
+  comments:
+    build: src/services/comments
+    ports:
+      - "3002:3002"
+
+  users:
+    build: src/services/users
+    ports:
+      - "3003:3003"

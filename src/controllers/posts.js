@@ -1,66 +1,36 @@
-const CommentsService = require("../services/comments");
-const PostsService = require("../services/posts");
-const UsersService = require("../services/users");
+const CreatePostsInteractor = require("../Iteractors/createPosts.interactor");
+const FetchPostByIdInteractor = require("../Iteractors/fetchPostById.interactor");
 
-const postsService = new PostsService()
-const commentsService = new CommentsService()
-const usersService = new UsersService()
+const createPostsInteractor = new CreatePostsInteractor()
+const fetchPostByIdInteractor = new FetchPostByIdInteractor()
 class PostsController {
-    async getPosts(){
-       const posts = await postsService.getPosts()
 
-       const authorIds = new Set();
-        for(const post of posts){
-            authorIds.add(post.authorId)
-        }
+    /**
+     * @typedef {Object} PostData
+     * @property {string} authorId
+     * @property {string} title
+     * @property {string} text
+     */
 
-        const users = await usersService.getUsers([...authorIds])
+    /**
+     * @param {PostData} body
+     */
 
-        for(const post of posts){
-            post.author = users.get(post.authorId);
-            post.authorId = undefined
-        }
-
-       return posts
+    async createPosts(body) {
+        const data = await createPostsInteractor.execute(body)
+        return data
     }
 
-/**
- * @param {number} id
- */
 
-async getPost (id){
-    try {
+    /**
+     * @param {number} id
+     */
 
-    //Fetch data
-    const [post, comments] = await Promise.all([
-        postsService.getPost(id),
-        commentsService.getComments(id)
-    ])
-    //Mount user ids
-    const userIds = new Set([post.authorId]);
-    for (const comment of comments) {
-        userIds.add(comment.userId)
+    async getPost(id) {
+        const data = await fetchPostByIdInteractor.execute(id);
+
+        return data;
     }
-
-    //Fetch users
-    const users = await usersService.getUsers([...userIds])
-
-    //Transform user data
-    post.author = users.get(post.authorId);
-    for (const comment of comments){
-        comment.user = users.get(comment.userId)
-        comment.userId = undefined;
-    }
-
-    return {
-        ...post,
-        authorId: undefined,
-        comments
-    }
-    } catch (error) {
-        throw new Error('Fail to fetch post');
-    }
-}
 
 
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PostsController = require('./controllers/posts');
-const { encrypt, decrypt } = require('./utils/crypto');
+const { encrypt, decrypt } = require('./utils/crypto/crypto');
 const { swaggerUi, swaggerSpec } = require('./utils/swagger/swaggerConfig');
 
 app.use(express.json());

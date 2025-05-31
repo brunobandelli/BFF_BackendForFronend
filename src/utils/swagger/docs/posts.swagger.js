@@ -34,6 +34,8 @@
  *                   type: string
  *                 iv:
  *                   type: string
+ *                 hmac:
+ *                   type: string
  *       400:
  *         description: Requisição inválida
  *       500:
@@ -41,7 +43,7 @@
  *
  * /posts/decrypt:
  *   post:
- *     summary: Descriptografa dados e retorna o post pelo id
+ *     summary: Descriptografa os dados e retorna o post pelo ID
  *     requestBody:
  *       required: true
  *       content:
@@ -55,13 +57,16 @@
  *                 type: string
  *               iv:
  *                 type: string
+ *               hmac:
+ *                 type: string
  *             required:
  *               - encryptedData
  *               - key
  *               - iv
+ *               - hmac
  *     responses:
  *       200:
- *         description: Post descriptografado
+ *         description: Post descriptografado com sucesso
  *         content:
  *           application/json:
  *             schema:

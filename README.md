@@ -53,3 +53,12 @@ Para parar os containers:
 ```js
 docker compose down
 ```
+
+### Observação de Segurança
+
+Durante os testes, foi identificado que era possível alterar o `encryptedData` e ainda obter uma resposta da descriptografia, mesmo com dados adulterados.  
+Isso ocorre porque o algoritmo **AES-256-CTR**, por ser um modo de cifra por fluxo (stream cipher), **não oferece integridade dos dados** por padrão — ou seja, ele criptografa, mas não detecta alterações.
+
+Para resolver esse problema, foi adicionada uma verificação com **HMAC-SHA256**.  
+A HMAC atua como uma "assinatura digital" que garante que os dados criptografados **não foram modificados** após a criptografia.  
+Se qualquer parte do conteúdo for alterada (como o `encryptedData`, `iv` ou `key`), a HMAC deixa de ser válida e a descriptografia é **bloqueada com erro**.

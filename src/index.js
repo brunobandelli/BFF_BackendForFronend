@@ -8,7 +8,7 @@ app.use(express.json());
 
 const postsController = new PostsController();
 
-//ROTA DE CRIAÇÃO DE POSTS FUNCIONAIS COM O SERVIÇOS
+// ROTA DE CRIAÇÃO DE POSTS FUNCIONAIS COM O SERVIÇO
 app.post('/posts/encrypt', async (req, res) => {
   const { ...body } = req.body;
 
@@ -27,15 +27,16 @@ app.post('/posts/encrypt', async (req, res) => {
   }
 });
 
-//ROTA DE FETCH DE POSTS FUNCIONAIS COM O SERVIÇOS
+// ROTA DE FETCH DE POSTS FUNCIONAIS COM O SERVIÇO
 app.post('/posts/decrypt', async (req, res) => {
-  const { encryptedData, key, iv } = req.body;
-  if (!encryptedData || !key || !iv) {
-    return res.status(400).json({ error: 'encryptedData, key, and iv are required' });
+  const { encryptedData, key, iv, hmac } = req.body;
+
+  if (!encryptedData || !key || !iv || !hmac) {
+    return res.status(400).json({ error: 'encryptedData, key, iv, and hmac are required' });
   }
 
   try {
-    const decryptedText = decrypt(encryptedData, key, iv);
+    const decryptedText = decrypt(encryptedData, key, iv, hmac);
     const bodyDecrypted = JSON.parse(decryptedText);
     const resultBody = await postsController.getPost(bodyDecrypted.id);
     res.json(resultBody);
@@ -44,7 +45,7 @@ app.post('/posts/decrypt', async (req, res) => {
   }
 });
 
-//ROTA SIMPLES DE CRIPTOGRAFIA SUGERIDA.
+// ROTA SIMPLES DE CRIPTOGRAFIA
 app.post('/encrypt', (req, res) => {
   const { text } = req.body;
   if (!text) {
@@ -59,15 +60,16 @@ app.post('/encrypt', (req, res) => {
   }
 });
 
-//ROTA SIMPLES DE DESCRIPTOGRAFIA SUGERIDA.
+// ROTA SIMPLES DE DESCRIPTOGRAFIA
 app.post('/decrypt', (req, res) => {
-  const { encryptedData, key, iv } = req.body;
-  if (!encryptedData || !key || !iv) {
-    return res.status(400).json({ error: 'encryptedData, key, and iv are required' });
+  const { encryptedData, key, iv, hmac } = req.body;
+
+  if (!encryptedData || !key || !iv || !hmac) {
+    return res.status(400).json({ error: 'encryptedData, key, iv, and hmac are required' });
   }
 
   try {
-    const decryptedText = decrypt(encryptedData, key, iv);
+    const decryptedText = decrypt(encryptedData, key, iv, hmac);
     res.json({ text: decryptedText });
   } catch (err) {
     res.status(500).json({ error: 'Decryption failed' });
